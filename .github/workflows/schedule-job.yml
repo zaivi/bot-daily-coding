@@ -1,0 +1,37 @@
+# Github Workflows that run the main.py every hour.
+# Then commit the changes of ./data folders push back to remote
+# Ref: https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#onschedule
+
+name: bot-daily-job
+
+on:
+    push:
+        branches:
+            - main
+    schedule:
+        #        You can use https://crontab.guru to help generate
+        #        your cron syntax and confirm what time it will run
+        #
+        #        ┌───────────── minute 0, 30
+        #        │    ┌───────────── hour (0 - 23)
+        #        │    │ ┌───────────── day of the month (1 - 31)
+        #        │    │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+        #        │    │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+        #        │    │ │ │ │
+        #        0,30 * * * *
+        - cron: "9 * * * *"
+
+jobs:
+    cron-job:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-python@v4
+              with:
+                  python-version: "3.8"
+                  cache: "pip" # caching pip dependencies
+            - run: pip install -r requirements.txt
+            - name: Bot schedule Daily Challenge to Webhook
+              run: |
+                  export PYTHONPATH=.:$PYTHONPATH
+                  python3 ./src/bot_daily_coding.py
