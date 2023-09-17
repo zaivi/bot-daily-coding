@@ -23,6 +23,12 @@ class TextMessageDailyCodingChallenge(BaseModel):
     TopicTags: str = Field(..., description="Challenge list of topic tags")
 
 
+class SlackMessage(BaseModel):
+    Text: str = Field(..., description="")
+    IconEmoji: str = Field(..., description="")
+    Attachments: list[Attachment] = Field(..., description="")
+
+
 def toAttachment(s: TextMessageDailyCodingChallenge) -> List[Attachment]:
     fields = list()
     fields.append(Field(
@@ -50,3 +56,5 @@ def toAttachment(s: TextMessageDailyCodingChallenge) -> List[Attachment]:
         Title="Topic Tags",
         Value=s.TopicTags
     ))
+
+    return list(Attachment(Fields=fields))
