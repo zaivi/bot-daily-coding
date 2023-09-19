@@ -1,7 +1,7 @@
 from enum import Enum
 from marshmallow_dataclass import dataclass
 from typing import Optional, List, Dict, Union
-from pydantic import BaseModel, Field, ConfigDict, validator
+from pydantic import BaseModel, Field, ConfigDict, validator, computed_field
 
 from model.slack import TextMessageDailyCodingChallenge, SlackEnum
 
@@ -39,9 +39,9 @@ class LeetCodeEnum(Enum):
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.132 Safari/537.36",
         "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.0.9895 Safari/537.36"
     ]
-    FormatLinkLeetCode    = "https://leetcode.com%s"
-    FormatTextLeetCode    = "%s\n%s"
-    FormatLinkTagLeetCode = "https://leetcode.com/tag/%s"
+    FormatLinkLeetCode    = "https://leetcode.com{}"
+    FormatTextLeetCode    = "{}\n{}"
+    FormatLinkTagLeetCode = "https://leetcode.com/tag/{}"
      
 
 class TopicTag(BaseModel):
@@ -80,12 +80,11 @@ class LeetCodeChallenge(BaseModel):
 
 class ParamDailyCodingChallenge(BaseModel):
     Body: str
-    Payload: Optional[Dict]
 
-    def __init__(cls, Body):
-        super().__init__(Body=Body, Payload={})
-        pld = dict({"query": cls.Body, "variables": {}})
-        cls.Payload = pld
+    @computed_field
+    @property
+    def Payload(cls) -> dict:
+        return dict({"query": cls.Body, "variables": {}})
 
 
 def ToTextMessageDailyCodingChallenge(d: LeetCodeChallenge) -> TextMessageDailyCodingChallenge:
@@ -96,15 +95,16 @@ def ToTextMessageDailyCodingChallenge(d: LeetCodeChallenge) -> TextMessageDailyC
         Title=d.question.frontendQuestionId + ". " + d.question.title,
         Date=d.date,
         Difficulty=d.question.difficulty,
-        Link=d.link
+        Link=LeetCodeEnum.FormatLinkLeetCode.value.format(d.link),
+        TopicTags=""
     )
     
     topicTags = []
 
     for _, val in enumerate(d.question.topicTags):
         tagLink = LeetCodeEnum.FormatLinkTagLeetCode.value.format(val.slug)
-        topicTags.append(SlackEnum.FormatTextLinkSlack.value.format(tagLink, val.Name))
+        topicTags.append(SlackEnum.FormatTextLinkSlack.value.format(tagLink, val.name))
 
-    textMsg.TopicTags = topicTags.join(", ")
+    textMsg.TopicTags = ", ".join(topicTags)
 
     return textMsg

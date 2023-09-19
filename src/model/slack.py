@@ -16,7 +16,7 @@ class MessField(BaseModel):
 
 class Attachment(BaseModel):
     Fields: List[MessField] = Field(..., description="")
-    ImageUrl: str = Field(..., description="")
+    ImageUrl: str = Field("None", description="")
 
 
 class TextMessageDailyCodingChallenge(BaseModel):
@@ -29,36 +29,36 @@ class TextMessageDailyCodingChallenge(BaseModel):
 
 class SlackMessage(BaseModel):
     Text: str = Field(..., description="")
-    IconEmoji: str = Field(..., description="")
-    Attachments: list[Attachment] = Field(..., description="")
+    IconEmoji: str = Field("None", description="")
+    Attachments: Attachment = Field(..., description="")
 
 
-def toAttachment(s: TextMessageDailyCodingChallenge) -> List[Attachment]:
+def toAttachment(s: TextMessageDailyCodingChallenge) -> Attachment:
     fields = list()
-    fields.append(Field(
+    fields.append(MessField(
         Short=True,
         Title="Title",
         Value=s.Title
     ))
-    fields.append(Field(
+    fields.append(MessField(
         Short=True,
         Title="Date",
         Value=s.Date
     ))
-    fields.append(Field(
+    fields.append(MessField(
         Short=True,
         Title="Difficulty",
         Value=s.Difficulty
     ))
-    fields.append(Field(
+    fields.append(MessField(
         Short=True,
         Title="Link",
         Value=s.Link
     ))
-    fields.append(Field(
+    fields.append(MessField(
         Short=True,
         Title="Topic Tags",
         Value=s.TopicTags
     ))
 
-    return list(Attachment(Fields=fields))
+    return Attachment(Fields=fields)
