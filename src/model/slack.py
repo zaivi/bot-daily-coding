@@ -1,17 +1,21 @@
+from enum import Enum
 from typing import Optional, List, Dict, Union
-
 from pydantic import BaseModel, Field, ConfigDict
 
 
 
-class Field(BaseModel):
+class SlackEnum(Enum):
+    FormatTextLinkSlack = "<{}|{}>"
+
+
+class MessField(BaseModel):
     Short: bool = Field(..., description="")
     Title: str = Field(..., description="")
     Value: str = Field(..., description="")
     
 
 class Attachment(BaseModel):
-    Fields: List[Field] = Field(..., description="")
+    Fields: List[MessField] = Field(..., description="")
     ImageUrl: str = Field(..., description="")
 
 
@@ -20,7 +24,7 @@ class TextMessageDailyCodingChallenge(BaseModel):
     Date: str = Field(..., description="Challenge creation date")
     Difficulty: str = Field(..., description="Challenge Difficulty")
     Link: str = Field(..., description="Challenge URL resource")
-    TopicTags: str = Field(..., description="Challenge list of topic tags")
+    TopicTags: Optional[str] = Field(..., description="Challenge list of topic tags")
 
 
 class SlackMessage(BaseModel):
