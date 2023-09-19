@@ -27,7 +27,7 @@ def getDailyCodingChallenge(url: str, params: leetcode.ParamDailyCodingChallenge
     logger.info("Get daily leetcoding challenge")
 
     headers = config.ssi_headers
-    headers["user-agent"] = leetcode.ArrayUserAgent[random.randint(0,len(leetcode.ArrayUserAgent)-1)]
+    headers["user-agent"] = leetcode.LeetCodeEnum.ArrayUserAgent.value[random.randint(0,len(leetcode.LeetCodeEnum.ArrayUserAgent.value)-1)]
 
     response = requests.request("POST", url, headers=headers, json=params.Payload)
     
