@@ -28,9 +28,9 @@ class TextMessageDailyCodingChallenge(BaseModel):
 
 
 class SlackMessage(BaseModel):
-    Text: str = Field(..., description="")
-    IconEmoji: str = Field("None", description="")
-    Attachments: Attachment = Field(..., description="")
+    text: str = Field(..., description="")
+    iconEmoji: str = Field("None", description="")
+    attachments: Attachment = Field(..., description="")
 
 
 def toAttachment(s: TextMessageDailyCodingChallenge) -> Attachment:
@@ -53,7 +53,7 @@ def toAttachment(s: TextMessageDailyCodingChallenge) -> Attachment:
     fields.append(MessField(
         Short=True,
         Title="Link",
-        Value=s.Link
+        Value=SlackEnum.FormatTextLinkSlack.value.format(s.Link, s.Title)
     ))
     fields.append(MessField(
         Short=True,

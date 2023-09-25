@@ -41,6 +41,7 @@ class LeetCodeEnum(Enum):
     ]
     FormatLinkLeetCode    = "https://leetcode.com{}"
     FormatTextLeetCode    = "{}\n{}"
+    FormatBoldTextLeetCode    = "*{}*\n{}"
     FormatLinkTagLeetCode = "https://leetcode.com/tag/{}"
      
 
