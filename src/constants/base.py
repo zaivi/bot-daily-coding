@@ -1,5 +1,5 @@
 BeginningTaskMessage        = "beginning task = %s info input = %v"
-TaskErrorMessage            = "task = %s is failed with err = %v"
+TaskErrorMessage            = "task = {} is failed with err = {}"
 GetEntityErrorMessage       = "get entity = %s info input = %v fail with err = %v"
 UpdateEntityErrorMessage    = "update entity = %s info input = %v fail with err = %v"
 CreateEntityErrorMessage    = "create entity = %s info input = %v fail with err = %v"
