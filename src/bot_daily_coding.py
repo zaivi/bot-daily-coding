@@ -13,7 +13,7 @@ if __name__ == "__main__":
     b = notify.NewNotify(
         cfg=Config(
             WebhookSlackLeetCode=os.environ["WEBHOOK_SLACK_LEETCODE"],
-            TagsSlackLeetCode="<@channel>"
+            TagsSlackLeetCode="<!channel>"
         ), 
         statisticalDomain="test"
     )
