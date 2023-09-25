@@ -1,3 +1,4 @@
+import os
 from loguru import logger
 
 from model import notify
@@ -11,7 +12,7 @@ from constants.base import TaskErrorMessage
 if __name__ == "__main__":
     b = notify.NewNotify(
         cfg=Config(
-            WebhookSlackLeetCode="",
+            WebhookSlackLeetCode=os.environ["WEBHOOK_SLACK_LEETCODE"],
             TagsSlackLeetCode="<@U03E2AF2D6Y>"
         ), 
         statisticalDomain="test"
