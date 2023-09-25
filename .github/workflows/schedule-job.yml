@@ -32,6 +32,7 @@ jobs:
                   cache: "pip" # caching pip dependencies
             - run: pip install -r requirements_dev.txt
             - name: Bot schedule Daily Challenge to Webhook
+              env: WEBHOOK_SLACK_LEETCODE: ${{secrets.WEBHOOK_SLACK_LEETCODE}}
               run: |
                   export PYTHONPATH=.:$PYTHONPATH
                   python3 ./src/bot_daily_coding.py
