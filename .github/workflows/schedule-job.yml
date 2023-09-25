@@ -24,12 +24,12 @@ on:
 jobs:
     cron-job:
         runs-on: ubuntu-latest
-        steps:
+        steps:s
             - uses: actions/checkout@v3
-            - uses: actions/setup-python@v4
-              with:
-                  python-version: "3.8"
-                  cache: "pip" # caching pip dependencies
+            # - uses: actions/setup-python@v4
+            #   with:
+            #       python-version: "3.8"
+            #       cache: "pip" # caching pip dependencies
             - run: ls -la
             - run: pip install -r requirements_dev.txt
             - name: Bot schedule Daily Challenge to Webhook
