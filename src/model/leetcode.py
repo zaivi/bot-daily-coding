@@ -1,5 +1,4 @@
 from enum import Enum
-from marshmallow_dataclass import dataclass
 from typing import Optional, List, Dict, Union
 from pydantic import BaseModel, Field, ConfigDict, validator, computed_field
 
