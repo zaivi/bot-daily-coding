@@ -13,8 +13,9 @@ from utils.notify import notify_slack
 def ProcessNotifyDailyLeetCodingChallenge(b: notify.Notify) -> base.CustomException:
     logger.info(BeginningTaskMessage, "ProcessNotifyDailyLeetCodingChallenge")
 
-    dailyCodingChallenge, err = getDailyCodingChallenge(url=leetcode.LeetCodeEnum.URLGraphql.value, params=leetcode.ParamDailyCodingChallenge(
-        Body=str(leetcode.LeetCodeEnum.Body.value)
+    dailyCodingChallenge, err = getDailyCodingChallenge(
+        url=leetcode.LeetCodeEnum.URLGraphql.value, 
+        params=leetcode.ParamDailyCodingChallenge(Body=str(leetcode.LeetCodeEnum.Body.value)
     ))
 
     if err is not None:
