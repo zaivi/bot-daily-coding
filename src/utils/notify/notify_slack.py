@@ -51,7 +51,14 @@ def sendMessage(webhook: str, slackMessage: slack.SlackMessage) -> base.CustomEx
                             "text": leetcode.LeetCodeEnum.FormatBoldTextLeetCode.value.format(slack_dict["attachments"]["Fields"][3]["Title"], slack_dict["attachments"]["Fields"][3]["Value"])
                         }
                     ]
-                }
+                },
+                {
+        			"type": "section",
+        			"text": {
+        				"type": "mrkdwn",
+        				"text": "❣ Please like and post a your comment below. Have a nice day ! 😄"
+        			}
+        		}
             ]
         }
 
